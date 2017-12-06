@@ -1,0 +1,24 @@
+{
+    "name": "Interview BeeJee",
+    "description": "Test task",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roman Bylbas",
+            "email": "roman.bylbas@gmail.com",
+            "role": "Creator / Main Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "filp/whoops": "^2.1",
+        "patricklouys/http": "~1.4",
+        "nikic/fast-route": "^1.2",
+        "rdlowrey/auryn": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "BeeJee\\": "app/"
+        }
+    }
+}
