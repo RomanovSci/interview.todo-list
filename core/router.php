@@ -10,7 +10,7 @@ foreach ($response->getHeaders() as $header) {
 }
 
 $routeDefinitionCallback = function(\FastRoute\RouteCollector $r) {
-    $routes = include(__DIR__.'/../routes.php');
+    $routes = include(__DIR__.'/../app/routes.php');
     foreach ($routes as $route) {
         $r->addRoute($route[0], $route[1], $route[2]);
     }

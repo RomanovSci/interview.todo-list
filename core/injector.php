@@ -17,7 +17,7 @@ $injector->share('Http\HttpResponse');
 
 $injector->share('Twig_Environment');
 $injector->define('Twig_Environment', [
-    ':loader' => new Twig_Loader_Filesystem(__DIR__.'/../Views')
+    ':loader' => new Twig_Loader_Filesystem(__DIR__.'/../app/Views')
 ]);
 
 return $injector;
