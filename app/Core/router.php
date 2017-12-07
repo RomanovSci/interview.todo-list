@@ -35,8 +35,7 @@ switch ($routeInfo[0]) {
         $vars = $routeInfo[2];
 
         $controller = $injector->make($className);
-        $controller->$method($vars);
-
+        $response->setContent($controller->$method($vars));
         break;
 }
 
