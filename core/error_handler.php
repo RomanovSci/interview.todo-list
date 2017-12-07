@@ -8,7 +8,7 @@ if ($environment !== 'production') {
         new \Whoops\Handler\PrettyPageHandler()
     );
 } else {
-    $whoops->pushHandler(function($e){
+    $whoops->pushHandler(function ($e) {
         echo 'Whoops...Something went wrong';
     });
 }
