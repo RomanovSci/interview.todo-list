@@ -1,6 +1,6 @@
 <?php
 
-namespace BeeJee\Controllers;
+namespace App\Controllers;
 
 use Http\Request;
 use \Twig_Environment as Twig;
@@ -16,7 +16,8 @@ class SiteController
      * @param Request $request
      * @param Twig $twig
      */
-    public function __construct(Request $request, Twig $twig) {
+    public function __construct(Request $request, Twig $twig)
+    {
         $this->request = $request;
         $this->twig = $twig;
     }

@@ -1,5 +1,5 @@
 <?php
 
 return [
-    ['GET', '/', 'BeeJee\Controllers\SiteController@index'],
+    ['GET', '/', 'App\Controllers\SiteController@index'],
 ];

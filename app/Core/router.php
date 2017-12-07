@@ -1,6 +1,6 @@
 <?php
 
-$injector = require __DIR__.'/dependencies.php';
+$injector = require __DIR__.'/injector.php';
 
 $request = $injector->make('Http\HttpRequest');
 $response = $injector->make('Http\HttpResponse');
