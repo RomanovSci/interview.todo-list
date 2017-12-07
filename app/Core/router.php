@@ -1,34 +1,16 @@
-<?php declare(strict_types = 1);
+<?php
 
-namespace BeeJee;
+$injector = require __DIR__.'/dependencies.php';
 
-use BeeJee\Controllers\SiteController;
-
-require __DIR__ . '/../vendor/autoload.php';
-
-$environment = 'development';
-
-$whoops = new \Whoops\Run;
-
-if ($environment !== 'production') {
-    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-} else {
-    $whoops->pushHandler(function($e){
-        echo 'Oooopps...Something went wrong';
-    });
-}
-
-$whoops->register();
-
-$request = new \Http\HttpRequest($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
-$response = new \Http\HttpResponse;
+$request = $injector->make('Http\HttpRequest');
+$response = $injector->make('Http\HttpResponse');
 
 foreach ($response->getHeaders() as $header) {
     header($header, false);
 }
 
 $routeDefinitionCallback = function(\FastRoute\RouteCollector $r) {
-    $routes = include('Routes.php');
+    $routes = include(__DIR__.'/../routes.php');
     foreach ($routes as $route) {
         $r->addRoute($route[0], $route[1], $route[2]);
     }
@@ -52,11 +34,10 @@ switch ($routeInfo[0]) {
         $method = $handlerInfo[1];
         $vars = $routeInfo[2];
 
-        $controller = new $className($response);
+        $controller = $injector->make($className);
         $controller->$method($vars);
 
         break;
 }
 
 echo $response->getContent();
-
