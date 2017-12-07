@@ -15,7 +15,8 @@
         "patricklouys/http": "~1.4",
         "nikic/fast-route": "^1.2",
         "rdlowrey/auryn": "^1.4",
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "doctrine/orm": "^2.5.5"
     },
     "autoload": {
         "psr-4": {
