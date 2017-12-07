@@ -3,7 +3,6 @@
 namespace BeeJee\Controllers;
 
 use Http\Request;
-use Http\Response;
 use \Twig_Environment as Twig;
 
 class SiteController
