@@ -37,4 +37,35 @@ class Task
      * @Column(type="string")
      */
     private $picture;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     name="completed_at",
+     *     nullable=true
+     * )
+     */
+    private $completedAt;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     name="created_at",
+     *     options={
+     *          "default": "CURRENT_TIMESTAMP"
+     *     }
+     * )
+     */
+    private $createdAt;
+
+    /**
+     * @Column(
+     *     type="datetime",
+     *     name="updated_at",
+     *     options={
+     *          "default": "CURRENT_TIMESTAMP"
+     *     }
+     * )
+     */
+    private $updatedAt;
 }
