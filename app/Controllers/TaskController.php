@@ -18,6 +18,8 @@ class TaskController
 
     public function create()
     {
-
+        return json_encode([
+            'a' => 2
+        ]);
     }
 }
