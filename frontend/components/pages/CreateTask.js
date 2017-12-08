@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import CreateTaskForm from './forms/CreateTaskForm';
 
 export default class CreateTask extends Component {
 
@@ -9,9 +10,9 @@ export default class CreateTask extends Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col-md-1">
-                        <h1>Create page</h1>
+                <div className="row justify-content-md-center">
+                    <div className="col-12 text-center">
+                        <CreateTaskForm/>
                     </div>
                 </div>
             </div>

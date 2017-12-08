@@ -2,18 +2,17 @@
 
 $injector = new \Auryn\Injector();
 
-$injector->alias('Http\Request', 'Http\HttpRequest');
-$injector->share('Http\HttpRequest');
-$injector->define('Http\HttpRequest', [
-    ':get' => $_GET,
-    ':post' => $_POST,
+$injector->share('\Symfony\Component\HttpFoundation\Request');
+$injector->define('\Symfony\Component\HttpFoundation\Request', [
+    ':query' => $_GET,
+    ':request' => $_POST,
+    ':attributes' => [],
     ':cookies' => $_COOKIE,
     ':files' => $_FILES,
     ':server' => $_SERVER,
 ]);
 
-$injector->alias('Http\Response', 'Http\HttpResponse');
-$injector->share('Http\HttpResponse');
+$injector->share('\Symfony\Component\HttpFoundation\Response');
 
 $injector->share('Twig_Environment');
 $injector->define('Twig_Environment', [

@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use Http\Request;
-use Http\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController
 {
@@ -18,8 +18,6 @@ class TaskController
 
     public function create()
     {
-        return json_encode([
-            'a' => 2
-        ]);
+        return 'a';
     }
 }

@@ -1,13 +1,15 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 $injector = require __DIR__.'/injector.php';
 
-$request = $injector->make('Http\HttpRequest');
-$response = $injector->make('Http\HttpResponse');
+/** @var Request $request */
+$request = $injector->make('\Symfony\Component\HttpFoundation\Request');
 
-foreach ($response->getHeaders() as $header) {
-    header($header, false);
-}
+/** @var Response $response */
+$response = $injector->make('\Symfony\Component\HttpFoundation\Response');
 
 $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
     $routes = include(__DIR__.'/../app/routes.php');
@@ -15,7 +17,7 @@ $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r
         $r->addRoute($route[0], $route[1], $route[2]);
     }
 });
-$routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPath());
+$routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
 
 switch ($routeInfo[0]) {
     case \FastRoute\Dispatcher::NOT_FOUND:
