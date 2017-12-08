@@ -8,4 +8,4 @@ return EntityManager::create([
     'user'     => 'root',
     'password' => 'toor',
     'dbname'   => 'no_framework',
-], Setup::createAnnotationMetadataConfiguration([__DIR__.'/../Models'], true));
+], Setup::createAnnotationMetadataConfiguration([__DIR__.'/../app/Models'], true));
