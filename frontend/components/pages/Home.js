@@ -40,10 +40,16 @@ export default class Home extends Component {
         return this.state.tasks.map((task, index) => {
             return (
                 <div className="row" key={index}>
-                    <div className="col-1">{task.id}</div>
                     <div className="col-3">{task.username}</div>
                     <div className="col-3">{task.email}</div>
-                    <div className="col-5">{task.text}</div>
+                    <div className="col-3">{task.text}</div>
+                    <div className="col-3">
+                        <input
+                            type="checkbox"
+                            checked={task.completed_at}
+                            disabled="true"
+                        />
+                    </div>
                 </div>
             );
         });
@@ -53,10 +59,21 @@ export default class Home extends Component {
         return (
             <div className="container">
                 <div className="row justify-content-md-center">
-                    <div className="col-12 text-center">
-                        <h1>Tasks</h1>
-                    </div>
                     <div className="col-8">
+                        <div className="row">
+                            <div className="col-11">
+                                <h1>Tasks</h1>
+                            </div>
+                            <div className="col-1">
+                                <a href="#/task/create" className="btn btn-success ">+</a>
+                            </div>
+                        </div>
+                        <div className="row bg-info">
+                            <div className="col-3">Author</div>
+                            <div className="col-3">Email</div>
+                            <div className="col-3">Task text</div>
+                            <div className="col-3">Status</div>
+                        </div>
                         {this.renderTaskList()}
                     </div>
                 </div>

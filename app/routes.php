@@ -4,4 +4,5 @@ return [
     ['GET', '/', 'App\Controllers\SiteController@index'],
     ['POST', '/api/task/create', 'App\Controllers\TaskController@create'],
     ['GET', '/api/tasks', 'App\Controllers\TaskController@index'],
+    ['POST', '/api/login', 'App\Controllers\UserController@login'],
 ];

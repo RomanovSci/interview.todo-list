@@ -1,4 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import {hashHistory} from 'react-router';
+import validate from 'validate.js';
+import {rules} from '../validation/LoginRules';
 import {
     NotificationContainer,
     NotificationManager
@@ -24,13 +27,33 @@ export default class LoginForm extends Component {
     submit(e) {
         e.preventDefault();
 
-        axios.post('/login', this.state)
+        if (!this.validate()) {
+            return;
+        }
+
+        axios.post('/api/login', this.state)
             .then(({data}) => {
 
-                if (data.success) {
-                    //TODO: Handler
+                if (data.hasOwnProperty('success') && data.success) {
+                    localStorage.setItem('token', data.token);
+                    hashHistory.push('/');
+                    return;
                 }
+
+                NotificationManager.error(data.message);
             })
+    }
+
+    validate() {
+        let errors = validate(this.state, rules);
+
+        if (!errors) {
+            return true;
+        }
+
+        /** Show first error */
+        NotificationManager.error(errors[Object.keys(errors)[0]][0]);
+        return false;
     }
 
     render() {

@@ -24,8 +24,8 @@ if ($password !== $passwordConfirm) {
 try {
     $user = new App\Models\User();
     $user
-        ->setUsername($username)
-        ->setPassword($password)
+        ->setUsername(trim($username))
+        ->setPassword(trim($password))
         ->setIsAdmin(true)
         ->timestamp();
 
@@ -39,5 +39,5 @@ try {
         .PHP_EOL;
 }
 
-echo 'Done'.PHP_EOL;
+echo 'Done';
 

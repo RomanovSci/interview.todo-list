@@ -13,17 +13,20 @@ class User
      * @Column(type="integer")
      * @GeneratedValue
      */
-    private $id;
+    protected $id;
+
+    /**
+     * @Column(
+     *     type="string",
+     *     unique=true
+     * )
+     */
+    protected $username;
 
     /**
      * @Column(type="string")
      */
-    private $username;
-
-    /**
-     * @Column(type="string")
-     */
-    private $password;
+    protected $password;
 
     /**
      * @Column(
@@ -34,7 +37,16 @@ class User
      *     }
      * )
      */
-    private $isAdmin;
+    protected $isAdmin;
+
+    /**
+     * @Column(
+     *      type="string",
+     *      name="access_token",
+     *      nullable=true
+     * )
+     */
+    protected $accessToken;
 
     /**
      * @Column(
@@ -45,7 +57,7 @@ class User
      *     }
      * )
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @Column(
@@ -56,12 +68,13 @@ class User
      *     }
      * )
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     public function getId() { return $this->id; }
     public function getUsername() { return $this->username; }
     public function getPassword() { return $this->password; }
     public function getIsAdmin() { return $this->isAdmin; }
+    public function getAccessToken() { return $this->accessToken; }
     public function getCreatedAt() { return $this->createdAt; }
     public function getUpdatedAt() { return $this->updatedAt; }
 
@@ -71,13 +84,21 @@ class User
         return $this;
     }
 
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = md5($password);
         return $this;
     }
 
-    public function setIsAdmin($isAdmin) {
+    public function setIsAdmin($isAdmin)
+    {
         $this->isAdmin = $isAdmin;
+        return $this;
+    }
+
+    public function setAccessToken($token)
+    {
+        $this->accessToken = $token;
         return $this;
     }
 

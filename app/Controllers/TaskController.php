@@ -39,7 +39,7 @@ class TaskController
     {
         try {
             $tasks = $this->em
-                ->getRepository('App\Models\Task')
+                ->getRepository(Task::class)
                 ->findAll();
             $data = [];
 
@@ -71,15 +71,15 @@ class TaskController
     public function create()
     {
         try {
-            $data = json_decode(
+            $input = json_decode(
                 $this->request->getContent(),
                 true
             );
 
             $this->em->persist((new Task())
-                ->setUsername($data['username'])
-                ->setUserEmail($data['email'])
-                ->setText($data['text'])
+                ->setUsername($input['username'])
+                ->setUserEmail($input['email'])
+                ->setText($input['text'])
                 ->setPicture('Some path')
                 ->timestamps()
             );
