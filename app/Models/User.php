@@ -57,4 +57,34 @@ class User
      * )
      */
     private $updatedAt;
+
+    public function getId() { return $this->id; }
+    public function getUsername() { return $this->username; }
+    public function getPassword() { return $this->password; }
+    public function getIsAdmin() { return $this->isAdmin; }
+    public function getCreatedAt() { return $this->createdAt; }
+    public function getUpdatedAt() { return $this->updatedAt; }
+
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    public function setPassword($password) {
+        $this->password = md5($password);
+        return $this;
+    }
+
+    public function setIsAdmin($isAdmin) {
+        $this->isAdmin = $isAdmin;
+        return $this;
+    }
+
+    public function timestamp()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+        return $this;
+    }
 }

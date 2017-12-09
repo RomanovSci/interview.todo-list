@@ -76,14 +76,13 @@ class TaskController
                 true
             );
 
-            $task = new Task();
-            $task->setUsername($data['username']);
-            $task->setUserEmail($data['email']);
-            $task->setText($data['text']);
-            $task->setPicture('Some path');
-            $task->timestamps();
-
-            $this->em->persist($task);
+            $this->em->persist((new Task())
+                ->setUsername($data['username'])
+                ->setUserEmail($data['email'])
+                ->setText($data['text'])
+                ->setPicture('Some path')
+                ->timestamps()
+            );
             $this->em->flush();
 
             return json_encode([

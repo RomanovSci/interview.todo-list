@@ -78,15 +78,41 @@ class Task
     public function getCreatedAt() { return $this->createdAt; }
     public function getUpdatedAt() { return $this->updatedAt; }
 
-    public function setUsername($username) { $this->username = $username; }
-    public function setUserEmail($userEmail) { $this->userEmail = $userEmail; }
-    public function setText($text) { $this->text = $text; }
-    public function setPicture($picture) { $this->picture = $picture; }
-    public function setCompletedAt($completedAt) { $this->completedAt = $completedAt; }
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    public function setUserEmail($userEmail)
+    {
+        $this->userEmail = $userEmail;
+        return $this;
+    }
+
+    public function setText($text)
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+        return $this;
+    }
+
+    public function setCompletedAt($completedAt)
+    {
+        $this->completedAt = $completedAt;
+        return $this;
+    }
+
     public function timestamps()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        return $this;
     }
 
     /**
