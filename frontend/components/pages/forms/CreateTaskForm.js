@@ -6,6 +6,7 @@ import {
     NotificationManager
 } from 'react-notifications';
 import axios from 'axios';
+import {hashHistory} from 'react-router';
 
 export default class CreateTaskForm extends Component {
 
@@ -46,8 +47,14 @@ export default class CreateTaskForm extends Component {
         }
 
         axios.post('/api/task/create', this.state)
-            .then((res) => {
-                console.log(res);
+            .then(({data}) => {
+                if (data.success) {
+                    NotificationManager.success('Done ^_^.')
+
+                    setTimeout(() => {
+                        hashHistory.push('/');
+                    }, 1000);
+                }
             });
     }
 

@@ -3,7 +3,7 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-$injector = require __DIR__.'/injector.php';
+$injector = require __DIR__.'/dependencies.php';
 
 /** @var Request $request */
 $request = $injector->make('\Symfony\Component\HttpFoundation\Request');
@@ -12,7 +12,7 @@ $request = $injector->make('\Symfony\Component\HttpFoundation\Request');
 $response = $injector->make('\Symfony\Component\HttpFoundation\Response');
 
 $dispatcher = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-    $routes = include(__DIR__.'/../app/routes.php');
+    $routes = require __DIR__.'/../app/routes.php';
     foreach ($routes as $route) {
         $r->addRoute($route[0], $route[1], $route[2]);
     }
@@ -41,3 +41,5 @@ switch ($routeInfo[0]) {
 }
 
 echo $response->getContent();
+
+return $injector;

@@ -2,5 +2,6 @@
 
 return [
     ['GET', '/', 'App\Controllers\SiteController@index'],
-    ['GET', '/api/task/create', 'App\Controllers\TaskController@create'],
+    ['POST', '/api/task/create', 'App\Controllers\TaskController@create'],
+    ['GET', '/api/tasks', 'App\Controllers\TaskController@index'],
 ];

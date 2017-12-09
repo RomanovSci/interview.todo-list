@@ -11,7 +11,7 @@ export default class CreateTask extends Component {
         return (
             <div className="container">
                 <div className="row justify-content-md-center">
-                    <div className="col-12 text-center">
+                    <div className="col-4">
                         <CreateTaskForm/>
                     </div>
                 </div>

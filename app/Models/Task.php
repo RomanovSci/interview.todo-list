@@ -13,12 +13,12 @@ class Task
      * @Column(type="integer")
      * @GeneratedValue
      */
-    private $id;
+    protected $id;
 
     /**
      * @Column(type="string")
      */
-    private $username;
+    protected $username;
 
     /**
      * @Column(
@@ -26,17 +26,17 @@ class Task
      *     name="user_email"
      * )
      */
-    private $userEmail;
+    protected $userEmail;
 
     /**
      * @Column(type="string")
      */
-    private $text;
+    protected $text;
 
     /**
      * @Column(type="string")
      */
-    private $picture;
+    protected $picture;
 
     /**
      * @Column(
@@ -45,7 +45,7 @@ class Task
      *     nullable=true
      * )
      */
-    private $completedAt;
+    protected $completedAt;
 
     /**
      * @Column(
@@ -56,7 +56,7 @@ class Task
      *     }
      * )
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @Column(
@@ -67,5 +67,43 @@ class Task
      *     }
      * )
      */
-    private $updatedAt;
+    protected $updatedAt;
+
+    public function getId() { return $this->id; }
+    public function getUsername() { return $this->username; }
+    public function getUserEmail() { return $this->userEmail; }
+    public function getText() { return $this->text; }
+    public function getPicture() { return $this->picture; }
+    public function getCompletedAt() { return $this->completedAt; }
+    public function getCreatedAt() { return $this->createdAt; }
+    public function getUpdatedAt() { return $this->updatedAt; }
+
+    public function setUsername($username) { $this->username = $username; }
+    public function setUserEmail($userEmail) { $this->userEmail = $userEmail; }
+    public function setText($text) { $this->text = $text; }
+    public function setPicture($picture) { $this->picture = $picture; }
+    public function setCompletedAt($completedAt) { $this->completedAt = $completedAt; }
+    public function timestamps()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Return task data
+     * @return array
+     */
+    public function asArray()
+    {
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'email' => $this->userEmail,
+            'text' => $this->text,
+            'pic' => $this->picture,
+            'completed_at' => $this->completedAt,
+            'created_at' => $this->createdAt,
+            'updated_at' => $this->updatedAt,
+        ];
+    }
 }
