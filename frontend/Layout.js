@@ -13,6 +13,7 @@ export default class Layout extends Component {
                 <nav className="navbar navbar-light bg-faded">
                     <a className="navbar-brand" href="/">Home</a>
                     <a className="navbar-brand" href="#/task/create">Create task</a>
+                    <a className="navbar-brand" href="#/login">Login</a>
                 </nav>
                 <div id="content">
                     {this.props.children}
