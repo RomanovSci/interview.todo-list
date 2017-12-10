@@ -1,2 +1,10 @@
 @import 'vendor/bootstrap.min';
 @import 'vendor/notifications.css';
+
+.sortable {
+  cursor: pointer;
+}
+
+.task-list > div {
+  word-wrap: break-word;
+}

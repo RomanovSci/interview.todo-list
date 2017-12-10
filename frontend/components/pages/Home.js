@@ -5,6 +5,9 @@ import {
     NotificationContainer
 } from 'react-notifications';
 
+const SORT_ASC = 0;
+const SORT_DESC = 1;
+
 export default class Home extends Component {
 
     constructor(props) {
@@ -12,6 +15,7 @@ export default class Home extends Component {
 
         this.state = {
             tasks: null,
+            sortOrder: SORT_DESC,
         }
     }
 
@@ -28,6 +32,24 @@ export default class Home extends Component {
             });
     }
 
+    sort(e) {
+        let sortBy = e.target.getAttribute('data-field');
+        let sortedTasks = this.state.tasks.slice().sort((first, second) => {
+            if (this.state.sortOrder === SORT_DESC) {
+                return first[sortBy] > second[sortBy] ? -1 : 1;
+            }
+
+            return first[sortBy] > second[sortBy] ? 1 : -1;
+        });
+
+        this.setState({
+            tasks: sortedTasks,
+            sortOrder: (this.state.sortOrder === SORT_DESC)
+                ? SORT_ASC
+                : SORT_DESC
+        });
+    }
+
     renderTaskList() {
         if (!this.state.tasks) {
             return <p>Loading...</p>;
@@ -39,14 +61,14 @@ export default class Home extends Component {
 
         return this.state.tasks.map((task, index) => {
             return (
-                <div className="row" key={index}>
+                <div className="row task-list" key={index}>
                     <div className="col-3">{task.username}</div>
                     <div className="col-3">{task.email}</div>
                     <div className="col-3">{task.text}</div>
                     <div className="col-3">
                         <input
                             type="checkbox"
-                            checked={task.completed_at}
+                            checked={task.completed_at !== null}
                             disabled="true"
                         />
                     </div>
@@ -68,11 +90,11 @@ export default class Home extends Component {
                                 <a href="#/task/create" className="btn btn-success ">+</a>
                             </div>
                         </div>
-                        <div className="row bg-info">
-                            <div className="col-3">Author</div>
-                            <div className="col-3">Email</div>
-                            <div className="col-3">Task text</div>
-                            <div className="col-3">Status</div>
+                        <div className="row bg-info sortable" onClick={this.sort.bind(this)}>
+                            <div className="col-3" data-field="username">Author</div>
+                            <div className="col-3" data-field="email">Email</div>
+                            <div className="col-3" data-field="text">Task text</div>
+                            <div className="col-3" data-field="completed_at">Status</div>
                         </div>
                         {this.renderTaskList()}
                     </div>

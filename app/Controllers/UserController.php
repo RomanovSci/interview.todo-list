@@ -72,4 +72,34 @@ class UserController
             ]);
         }
     }
+
+    /**
+     * Check user token
+     * @return string
+     */
+    public function check()
+    {
+        try {
+            $input = json_decode(
+                $this->request->getContent(),
+                true
+            );
+
+            /** @var User $user */
+            $user = $this->em
+                ->getRepository(User::class)
+                ->findOneBy([
+                    'access_token' => $input['token'],
+                ]);
+
+            return json_encode([
+                'success' => $user instanceof User,
+            ]);
+        } catch (\Exception $e) {
+            return json_encode([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
 }
