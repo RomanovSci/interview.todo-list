@@ -132,7 +132,7 @@ class TaskController extends BaseController
                 $taskEntity->setText($task['text']);
                 $taskEntity->setCompletedAt($task['completed_at']
                     ? new \DateTime()
-                    : nullg
+                    : null
                 );
 
                 $this->em->flush();
