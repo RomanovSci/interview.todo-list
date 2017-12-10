@@ -1,5 +1,6 @@
 import './styles/main.scss';
 import React, {Component} from 'react';
+import axios from 'axios';
 
 export default class Layout extends Component {
 
@@ -11,19 +12,17 @@ export default class Layout extends Component {
         }
     }
 
-    renderNavigation() {
-        return (
-            <nav className="navbar navbar-light bg-faded">
-                <a className="navbar-brand" href="/">Home</a>
-                <a className="navbar-brand" href="#/login">Login</a>
-            </nav>
-        );
-    }
-
     render() {
         return (
             <div className="wrapper">
-                {this.renderNavigation()}
+                <nav className="navbar navbar-light bg-faded">
+                    <a className="navbar-brand" href="/">Home</a>
+                    {
+                        this.state.isLoggedIn
+                            ? 'Admin'
+                            : <a className="navbar-brand" href="#/login">Login</a>
+                    }
+                </nav>
                 <div id="content">
                     {this.props.children}
                 </div>

@@ -15,7 +15,8 @@ import CreateTask from './components/pages/CreateTask';
 import Login from './components/pages/Login';
 
 /** Router */
-export default <Router history={hashHistory}>
+export default
+<Router history={hashHistory}>
     <Route path="/" component={Layout}>
         <IndexRoute component={Home}/>
         <Route path="/task/create" component={CreateTask} />

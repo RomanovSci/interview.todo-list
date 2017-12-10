@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserController
+class UserController extends BaseController
 {
     protected $request;
     protected $response;
@@ -42,18 +42,12 @@ class UserController
                     'username' => $input['username'],
                 ]);
 
-            if (!$user) {
-                return json_encode([
-                    'success' => false,
-                    'message' => "User doesn't exists",
-                ]);
+            if (!$user instanceof User) {
+                throw new \Exception('Unauthorized');
             }
 
             if ($user->getPassword() !== md5($input['password'])) {
-                return json_encode([
-                    'success' => false,
-                    'message' => 'Incorrect password',
-                ]);
+                throw new \Exception('Incorrect password');
             }
 
             $token = rand_str();
@@ -66,10 +60,7 @@ class UserController
                 'token' => $token,
             ]);
         } catch (\Exception $e) {
-            return json_encode([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ]);
+            return $this->unsuccess($e->getMessage());
         }
     }
 
@@ -80,26 +71,18 @@ class UserController
     public function check()
     {
         try {
-            $input = json_decode(
-                $this->request->getContent(),
-                true
-            );
-
             /** @var User $user */
             $user = $this->em
                 ->getRepository(User::class)
                 ->findOneBy([
-                    'access_token' => $input['token'],
+                    'accessToken' => $this->request->query->get('token'),
                 ]);
 
             return json_encode([
                 'success' => $user instanceof User,
             ]);
         } catch (\Exception $e) {
-            return json_encode([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ]);
+            return $this->unsuccess($e->getMessage());
         }
     }
 }

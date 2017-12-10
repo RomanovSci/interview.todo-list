@@ -5,6 +5,17 @@ require __DIR__.'/../vendor/autoload.php';
 /** @var \Doctrine\ORM\EntityManager $em */
 $em = require __DIR__.'/../core/db.php';
 
+$admin = $em
+    ->getRepository(\App\Models\User::class)
+    ->findOneBy([
+        'isAdmin' => true,
+    ]);
+
+if ($admin !== null) {
+    echo 'Admin already created'.PHP_EOL;
+    exit;
+}
+
 echo 'Creating administrator entity'.PHP_EOL;
 
 echo 'Please input admin username: ';

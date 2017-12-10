@@ -3,13 +3,14 @@
 namespace App\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
 use Doctrine\ORM\EntityManager;
 use Gregwar\Image\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TaskController
+class TaskController extends BaseController
 {
     protected $request;
     protected $response;
@@ -58,10 +59,7 @@ class TaskController
                 'tasks' => $data,
             ]);
         } catch (\Exception $e) {
-            return json_encode([
-                'success' => false,
-                'error' => $e->getMessage(),
-            ]);
+            return $this->unsuccess($e->getMessage());
         }
     }
 
@@ -74,7 +72,9 @@ class TaskController
     {
         try {
             $input = $this->request->request->all();
-            $fileName = $this->saveFile($this->request->files->get('taskImage'));
+            $fileName = $this->saveFile(
+                $this->request->files->get('taskImage')
+            );
 
             $this->em->persist((new Task())
                 ->setUsername($input['username'])
@@ -89,10 +89,58 @@ class TaskController
                 'success' => true,
             ]);
         } catch (\Exception $e) {
+            return $this->unsuccess($e->getMessage());
+        }
+    }
 
-            return json_encode([
-                'success' => false,
-            ]);
+    public function update()
+    {
+        try {
+            $data = json_decode(
+                $this->request->getContent(),
+                true
+            );
+
+            $user = $this->em
+                ->getRepository(User::class)
+                ->findOneBy([
+                    'accessToken' => $data['token'],
+                ]);
+
+            if (!$user instanceof User) {
+                throw new \Exception('Unauthorized');
+            }
+
+            if (!$user->getIsAdmin()) {
+                throw new \Exception('Permissions denied');
+            }
+
+            if (!is_array($data['tasks'])) {
+                throw new \Exception('Incorrect format');
+            }
+
+            foreach ($data['tasks'] as $task) {
+                /** @var Task $taskEntity */
+                $taskEntity = $this->em
+                    ->getRepository(Task::class)
+                    ->find($task['id']);
+
+                if (!$taskEntity instanceof Task) {
+                    throw new \Exception("Couldn't find task ".$task['id']);
+                }
+
+                $taskEntity->setText($task['text']);
+                $taskEntity->setCompletedAt($task['completed_at']
+                    ? new \DateTime()
+                    : nullg
+                );
+
+                $this->em->flush();
+            }
+
+            return json_encode(['success' => true]);
+        } catch (\Exception $e) {
+            return $this->unsuccess($e->getMessage());
         }
     }
 

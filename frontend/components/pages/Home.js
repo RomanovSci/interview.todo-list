@@ -14,6 +14,8 @@ export default class Home extends Component {
         super(props);
 
         this.state = {
+            isLoggedIn: false,
+            editing: false,
             tasks: null,
             sortOrder: SORT_DESC,
         }
@@ -30,8 +32,21 @@ export default class Home extends Component {
 
                 NotificationManager.error('Cant load task list');
             });
+
+        axios.get(`/api/check-token?token=${localStorage.getItem('token')}`)
+            .then(({data}) => {
+                if (data.hasOwnProperty('success')) {
+                    this.setState({
+                        isLoggedIn: data.success,
+                    })
+                }
+            });
     }
 
+    /**
+     * Sort tasks list
+     * @param e
+     */
     sort(e) {
         let sortBy = e.target.getAttribute('data-field');
         let sortedTasks = this.state.tasks.slice().sort((first, second) => {
@@ -50,6 +65,46 @@ export default class Home extends Component {
         });
     }
 
+    /**
+     * Handle change input
+     *
+     * @param taskObject
+     * @param field
+     * @param e
+     */
+    handleInputChange(taskObject, field, e) {
+
+        if (field === 'completed_at') {
+            taskObject[field] = !taskObject[field];
+        } else {
+            taskObject[field] = e.target.value;
+        }
+
+        this.forceUpdate();
+    }
+
+    /**
+     * Enable/disable editing
+     * and send changes to server
+     */
+    toggleEditState() {
+
+        /** Send data to server */
+        if (this.state.editing) {
+            axios.post('/api/tasks/update', {
+                token: localStorage.getItem('token'),
+                tasks: this.state.tasks,
+            })
+                .then(({data}) => {
+                    console.log(data);
+                });
+        }
+
+        this.setState({
+            editing: !this.state.editing
+        });
+    }
+
     renderTaskList() {
         if (!this.state.tasks) {
             return <p>Loading...</p>;
@@ -59,17 +114,30 @@ export default class Home extends Component {
             return <p>No tasks yet</p>
         }
 
-        return this.state.tasks.map((task, index) => {
+        return this.state.tasks.map(task => {
             return (
-                <div className="row task-list" key={index}>
+                <div className="row task-list" key={task.id}>
                     <div className="col-3">{task.username}</div>
                     <div className="col-3">{task.email}</div>
-                    <div className="col-3">{task.text}</div>
                     <div className="col-3">
+                    {
+                        (this.state.editing)
+                            ? <input
+                                type="text"
+                                value={task.text}
+                                className="form-control"
+                                onChange={this.handleInputChange.bind(this, task, 'text')}
+                              />
+                            : task.text
+                    }
+                    </div>
+                    <div className="col-1">
                         <input
+                            className="form-check"
                             type="checkbox"
-                            checked={task.completed_at !== null}
-                            disabled="true"
+                            checked={!!task.completed_at}
+                            onChange={this.handleInputChange.bind(this, task, 'completed_at')}
+                            disabled={!this.state.editing}
                         />
                     </div>
                 </div>
@@ -83,12 +151,23 @@ export default class Home extends Component {
                 <div className="row justify-content-md-center">
                     <div className="col-8">
                         <div className="row">
-                            <div className="col-11">
+                            <div className="col-8">
                                 <h1>Tasks</h1>
                             </div>
                             <div className="col-1">
                                 <a href="#/task/create" className="btn btn-success ">+</a>
                             </div>
+                            { this.state.isLoggedIn
+                                ? (<div className="col-3">
+                                        <input
+                                            type="button"
+                                            className="btn btn-default"
+                                            onClick={this.toggleEditState.bind(this)}
+                                            value="Edit tasks"
+                                        />
+                                    </div>)
+                                : null
+                            }
                         </div>
                         <div className="row bg-info sortable" onClick={this.sort.bind(this)}>
                             <div className="col-3" data-field="username">Author</div>
