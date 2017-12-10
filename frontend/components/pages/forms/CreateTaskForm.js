@@ -7,6 +7,7 @@ import {
 } from 'react-notifications';
 import axios from 'axios';
 import {hashHistory} from 'react-router';
+import FileInput from 'react-file-input';
 
 export default class CreateTaskForm extends Component {
 
@@ -17,6 +18,7 @@ export default class CreateTaskForm extends Component {
             username:   '',
             email:      '',
             text:       '',
+            taskImage:  '',
         };
     }
 
@@ -34,6 +36,26 @@ export default class CreateTaskForm extends Component {
     }
 
     /**
+     * Handle file select
+     *
+     * @param e
+     * @return void
+     */
+    handleFileSelect(e) {
+        e.preventDefault();
+
+        let availableTypes = ['image/jpeg', 'image/gif', 'image/png',];
+        let taskImage = e.target.files[0];
+
+        if (availableTypes.indexOf(taskImage.type) === -1) {
+            NotificationManager.error('Incorrect image type');
+            return;
+        }
+
+        this.setState({taskImage});
+    }
+
+    /**
      * Send create task request
      *
      * @param e
@@ -46,10 +68,16 @@ export default class CreateTaskForm extends Component {
             return;
         }
 
-        axios.post('/api/task/create', this.state)
+        let formData = new FormData();
+
+        for (let key in this.state) {
+            formData.append(key, this.state[key]);
+        }
+
+        axios.post('/api/task/create', formData)
             .then(({data}) => {
                 if (data.success) {
-                    NotificationManager.success('Done ^_^.')
+                    NotificationManager.success('Done ^_^.');
 
                     setTimeout(() => {
                         hashHistory.push('/');
@@ -58,6 +86,11 @@ export default class CreateTaskForm extends Component {
             });
     }
 
+    /**
+     * Validate fields
+     *
+     * @return boolean
+     */
     validate() {
         let errors = validate(this.state, rules);
 
@@ -100,6 +133,16 @@ export default class CreateTaskForm extends Component {
                         id="text"
                         value={this.state.text}
                         onChange={this.handleInputChange.bind(this, 'text')}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="picture">Picture</label>
+                    <FileInput
+                        id="picture"
+                        accept=".png,.gif,.jpeg"
+                        placeholder="Click here for selecting"
+                        className="form-control"
+                        onChange={this.handleFileSelect.bind(this)}
                     />
                 </div>
                 <div className="form-group">

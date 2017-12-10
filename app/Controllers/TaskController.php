@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Task;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -71,16 +72,14 @@ class TaskController
     public function create()
     {
         try {
-            $input = json_decode(
-                $this->request->getContent(),
-                true
-            );
+            $input = $this->request->request->all();
+            $fileName = $this->saveFile($this->request->files->get('taskImage'));
 
             $this->em->persist((new Task())
                 ->setUsername($input['username'])
                 ->setUserEmail($input['email'])
                 ->setText($input['text'])
-                ->setPicture('Some path')
+                ->setPicture($fileName)
                 ->timestamps()
             );
             $this->em->flush();
@@ -93,6 +92,26 @@ class TaskController
             return json_encode([
                 'success' => false,
             ]);
+        }
+    }
+
+    /**
+     * @param $file
+     * @return string
+     */
+    protected function saveFile($file)
+    {
+        try {
+            if (!$file instanceof UploadedFile) {
+                return null;
+            }
+
+            $fileName = rand_str(32).'.'.$file->getClientOriginalExtension();
+            $file->move(__DIR__.'/../../public/images/uploaded', $fileName);
+
+            return $fileName;
+        } catch (\Exception $e) {
+            return null;
         }
     }
 }

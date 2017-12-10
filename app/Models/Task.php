@@ -34,7 +34,10 @@ class Task
     protected $text;
 
     /**
-     * @Column(type="string")
+     * @Column(
+     *     type="string",
+     *     nullable=true
+     * )
      */
     protected $picture;
 
