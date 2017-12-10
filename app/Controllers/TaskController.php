@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Task;
 use Doctrine\ORM\EntityManager;
+use Gregwar\Image\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -108,6 +109,11 @@ class TaskController
 
             $fileName = rand_str(32).'.'.$file->getClientOriginalExtension();
             $file->move(__DIR__.'/../../public/images/uploaded', $fileName);
+            $img = Image::open(__DIR__.'/../../public/images/uploaded/'.$fileName);
+
+            if ($img->width() > 320 || $img->height() > 240) {
+                $img->forceResize(320, 240)->save(__DIR__.'/../../public/images/uploaded/'.$fileName);
+            }
 
             return $fileName;
         } catch (\Exception $e) {
