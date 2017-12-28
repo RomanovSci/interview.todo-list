@@ -1,4 +1,4 @@
-#Simple todo list
+# Simple todo list
 
 #### How to run
 * Install all dependencies `composer ideps`
