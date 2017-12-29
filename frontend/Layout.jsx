@@ -1,6 +1,5 @@
 import './styles/main.scss';
 import React, {Component} from 'react';
-import axios from 'axios';
 
 export default class Layout extends Component {
 
