@@ -25,7 +25,7 @@
         }
     },
     "scripts": {
-        "ideps": "composer install && npm i",
+        "ideps": "composer install && npm i && cp ./config/env.php ./config/env-local.php",
         "create_tables": "./vendor/bin/doctrine orm:schema-tool:create",
         "serve": "npm run build && cd ./public && php -S localhost:3000"
     }
