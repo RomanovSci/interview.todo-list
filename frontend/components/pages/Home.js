@@ -149,30 +149,30 @@ export default class Home extends Component {
         return (
             <div className="container">
                 <div className="row justify-content-md-center">
-                    <div className="col-8">
+                    <div className="col-10">
                         <div className="row">
                             <div className="col-8">
-                                <h1>Tasks</h1>
+                                <h1>To do list</h1>
                             </div>
-                            <div className="col-1">
-                                <a href="#/task/create" className="btn btn-success ">+</a>
-                            </div>
-                            { this.state.isLoggedIn
-                                ? (<div className="col-3">
-                                        <input
+                            <div className="col-4">
+                                <a href="#/task/create" className="btn btn-success float-right">+</a>
+                                {
+                                    this.state.isLoggedIn
+                                        ?
+                                        (<input
                                             type="button"
-                                            className="btn btn-default"
+                                            className="btn btn-default float-right"
                                             onClick={this.toggleEditState.bind(this)}
-                                            value="Edit tasks"
-                                        />
-                                    </div>)
-                                : null
-                            }
+                                            value="Edit list"
+                                        />)
+                                        : null
+                                }
+                            </div>
                         </div>
                         <div className="row bg-info sortable" onClick={this.sort.bind(this)}>
                             <div className="col-3" data-field="username">Author</div>
                             <div className="col-3" data-field="email">Email</div>
-                            <div className="col-3" data-field="text">Task text</div>
+                            <div className="col-3" data-field="text">To do</div>
                             <div className="col-3" data-field="completed_at">Status</div>
                         </div>
                         {this.renderTaskList()}

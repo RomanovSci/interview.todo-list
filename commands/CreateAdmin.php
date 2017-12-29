@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__.'/../vendor/autoload.php';
+require  __DIR__.'/../core/setup_env.php';
 
 /** @var \Doctrine\ORM\EntityManager $em */
 $em = require __DIR__.'/../core/db.php';
