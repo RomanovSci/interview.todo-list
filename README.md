@@ -6,4 +6,4 @@
 * Create tables `composer setup`
 * Create admin account `php ./commands/CreateAdmin.php`
 * Build front-end `npm run build`
-* Run server `cd ./public && php -S localhost:3000`
+* Run server `composer serve`
