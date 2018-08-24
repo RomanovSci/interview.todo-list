@@ -1,8 +1,8 @@
 # Simple todo list
 
 #### How to run
-* Install all dependencies `composer ideps`
-* Setup db connection at `config/env-local.php` file
+* Install dependencies `composer install`
+* Copy and edit config file `cp ./config/env.php ./config/env-local.php`
 * Create tables `composer create-tables`
 * Create admin account `php ./commands/CreateAdmin.php`
 * Build front-end `npm run build`
