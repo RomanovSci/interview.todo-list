@@ -3,7 +3,7 @@
 #### How to run
 * Install all dependencies `composer ideps`
 * Setup db connection at `config/env-local.php` file
-* Create tables `composer setup`
+* Create tables `composer create-tables`
 * Create admin account `php ./commands/CreateAdmin.php`
 * Build front-end `npm run build`
 * Run server `composer serve`

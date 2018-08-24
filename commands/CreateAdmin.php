@@ -7,10 +7,8 @@ require  __DIR__.'/../core/setup_env.php';
 $em = require __DIR__.'/../core/db.php';
 
 $admin = $em
-    ->getRepository(\App\Models\User::class)
-    ->findOneBy([
-        'isAdmin' => true,
-    ]);
+    ->getRepository(\App\Models\Individual::class)
+    ->findOneBy(['isAdmin' => true]);
 
 if ($admin !== null) {
     echo 'Admin already created'.PHP_EOL;
@@ -34,9 +32,8 @@ if ($password !== $passwordConfirm) {
 }
 
 try {
-    $user = new App\Models\User();
-    $user
-        ->setUsername(trim($username))
+    $user = new App\Models\Individual();
+    $user->setUsername(trim($username))
         ->setPassword(trim($password))
         ->setIsAdmin(true)
         ->timestamp();
@@ -44,7 +41,6 @@ try {
     $em->persist($user);
     $em->flush();
 } catch (\Exception $e) {
-
     echo 'Error!'
         .PHP_EOL
         .$e->getMessage()

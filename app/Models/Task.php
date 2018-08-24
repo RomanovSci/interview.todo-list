@@ -72,45 +72,123 @@ class Task
      */
     protected $updatedAt;
 
-    public function getId() { return $this->id; }
-    public function getUsername() { return $this->username; }
-    public function getUserEmail() { return $this->userEmail; }
-    public function getText() { return $this->text; }
-    public function getPicture() { return $this->picture; }
-    public function getCompletedAt() { return $this->completedAt; }
-    public function getCreatedAt() { return $this->createdAt; }
-    public function getUpdatedAt() { return $this->updatedAt; }
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     * @return $this
+     */
     public function setUsername($username)
     {
         $this->username = $username;
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getUserEmail()
+    {
+        return $this->userEmail;
+    }
+
+    /**
+     * @param string $userEmail
+     * @return $this
+     */
     public function setUserEmail($userEmail)
     {
         $this->userEmail = $userEmail;
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param string $text
+     * @return $this
+     */
     public function setText($text)
     {
         $this->text = $text;
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param string $picture
+     * @return $this
+     */
     public function setPicture($picture)
     {
         $this->picture = $picture;
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCompletedAt()
+    {
+        return $this->completedAt;
+    }
+
+    /**
+     * @param \DateTime $completedAt
+     * @return $this
+     */
     public function setCompletedAt($completedAt)
     {
         $this->completedAt = $completedAt;
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @return $this
+     */
     public function timestamps()
     {
         $this->createdAt = new \DateTime();
@@ -120,6 +198,7 @@ class Task
 
     /**
      * Return task data
+     *
      * @return array
      */
     public function asArray()

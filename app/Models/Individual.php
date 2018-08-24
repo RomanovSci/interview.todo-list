@@ -4,9 +4,9 @@ namespace App\Models;
 
 /**
  * @Entity
- * @Table(name="user")
+ * @Table(name="individual")
  */
-class User
+class Individual
 {
     /**
      * @Id
@@ -70,38 +70,105 @@ class User
      */
     protected $updatedAt;
 
-    public function getId() { return $this->id; }
-    public function getUsername() { return $this->username; }
-    public function getPassword() { return $this->password; }
-    public function getIsAdmin() { return $this->isAdmin; }
-    public function getAccessToken() { return $this->accessToken; }
-    public function getCreatedAt() { return $this->createdAt; }
-    public function getUpdatedAt() { return $this->updatedAt; }
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     * @return $this
+     */
     public function setUsername($username)
     {
         $this->username = $username;
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     * @return $this
+     */
     public function setPassword($password)
     {
         $this->password = md5($password);
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
+
+    /**
+     * @param bool $isAdmin
+     * @return $this
+     */
     public function setIsAdmin($isAdmin)
     {
         $this->isAdmin = $isAdmin;
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * @param string $token
+     * @return $this
+     */
     public function setAccessToken($token)
     {
         $this->accessToken = $token;
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @return $this
+     */
     public function timestamp()
     {
         $this->createdAt = new \DateTime();
