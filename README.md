@@ -1,4 +1,4 @@
-# Simple todo list
+# Todo list
 
 #### How to run
 * Install dependencies `composer install`
