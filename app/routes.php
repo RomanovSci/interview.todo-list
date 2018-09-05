@@ -9,6 +9,6 @@ return [
     ['POST', '/api/tasks/update', 'App\Controllers\TaskController@update'],
 
     /** Auth */
-    ['POST', '/api/login', 'App\Controllers\UserController@login'],
-    ['GET', '/api/check-token', 'App\Controllers\UserController@check']
+    ['POST', '/api/login', 'App\Controllers\IndividualController@login'],
+    ['GET', '/api/check-token', 'App\Controllers\IndividualController@check']
 ];

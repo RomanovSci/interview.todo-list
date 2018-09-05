@@ -2,12 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
+use App\Models\Individual;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserController extends BaseController
+class IndividualController extends BaseController
 {
     protected $request;
     protected $response;
@@ -35,14 +35,14 @@ class UserController extends BaseController
                 true
             );
 
-            /** @var User $user */
+            /** @var Individual $user */
             $user = $this->em
-                ->getRepository(User::class)
+                ->getRepository(Individual::class)
                 ->findOneBy([
                     'username' => $input['username'],
                 ]);
 
-            if (!$user instanceof User) {
+            if (!$user instanceof Individual) {
                 throw new \Exception('Unauthorized');
             }
 
@@ -71,15 +71,15 @@ class UserController extends BaseController
     public function check()
     {
         try {
-            /** @var User $user */
+            /** @var Individual $user */
             $user = $this->em
-                ->getRepository(User::class)
+                ->getRepository(Individual::class)
                 ->findOneBy([
                     'accessToken' => $this->request->query->get('token'),
                 ]);
 
             return json_encode([
-                'success' => $user instanceof User,
+                'success' => $user instanceof Individual,
             ]);
         } catch (\Exception $e) {
             return $this->unsuccess($e->getMessage());

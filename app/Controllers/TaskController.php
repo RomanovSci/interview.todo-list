@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Task;
-use App\Models\User;
+use App\Models\Individual;
 use Doctrine\ORM\EntityManager;
 use Gregwar\Image\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -85,9 +85,7 @@ class TaskController extends BaseController
             );
             $this->em->flush();
 
-            return json_encode([
-                'success' => true,
-            ]);
+            return json_encode(['success' => true]);
         } catch (\Exception $e) {
             return $this->unsuccess($e->getMessage());
         }
@@ -102,12 +100,12 @@ class TaskController extends BaseController
             );
 
             $user = $this->em
-                ->getRepository(User::class)
+                ->getRepository(Individual::class)
                 ->findOneBy([
                     'accessToken' => $data['token'],
                 ]);
 
-            if (!$user instanceof User) {
+            if (!$user instanceof Individual) {
                 throw new \Exception('Unauthorized');
             }
 
