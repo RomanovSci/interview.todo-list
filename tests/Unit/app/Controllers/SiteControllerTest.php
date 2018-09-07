@@ -2,9 +2,14 @@
 
 namespace Tests\Unit\app\Controllers;
 
-use App\Controllers\SiteController;
+use Tests\Mocks\app\Controllers\SiteControllerMock;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class SiteControllerTest
+ *
+ * @package Tests\Unit\app\Controllers
+ */
 class SiteControllerTest extends TestCase
 {
     public function testConstruct()
@@ -21,8 +26,10 @@ class SiteControllerTest extends TestCase
 
     /**
      * @dataProvider indexDataProvider
-     *
      * @param $renderResult
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function testIndex($renderResult)
     {
@@ -42,15 +49,15 @@ class SiteControllerTest extends TestCase
         $this->assertSame($renderResult, $actualResult);
     }
 
+    /**
+     * Data provider for testIndex method
+     *
+     * @return array
+     */
     public function indexDataProvider()
     {
         return [
             ['test1'], ['test2'], ['test3'],
         ];
     }
-}
-
-class SiteControllerMock extends SiteController
-{
-    public $twig;
 }

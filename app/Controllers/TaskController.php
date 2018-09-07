@@ -72,17 +72,15 @@ class TaskController extends BaseController
     {
         try {
             $input = $this->request->request->all();
-            $fileName = $this->saveFile(
-                $this->request->files->get('taskImage')
-            );
-
-            $this->em->persist((new Task())
+            $fileName = $this->saveFile($this->request->files->get('taskImage'));
+            $task = (new Task())
                 ->setUsername($input['username'])
                 ->setUserEmail($input['email'])
                 ->setText($input['text'])
                 ->setPicture($fileName)
-                ->timestamps()
-            );
+                ->timestamps();
+
+            $this->em->persist($task);
             $this->em->flush();
 
             return json_encode(['success' => true]);
@@ -118,7 +116,9 @@ class TaskController extends BaseController
             }
 
             foreach ($data['tasks'] as $task) {
-                /** @var Task $taskEntity */
+                /**
+                 * @var Task $taskEntity
+                 */
                 $taskEntity = $this->em
                     ->getRepository(Task::class)
                     ->find($task['id']);
@@ -128,11 +128,7 @@ class TaskController extends BaseController
                 }
 
                 $taskEntity->setText($task['text']);
-                $taskEntity->setCompletedAt($task['completed_at']
-                    ? new \DateTime()
-                    : null
-                );
-
+                $taskEntity->setCompletedAt($task['completed_at'] ? new \DateTime() : null);
                 $this->em->flush();
             }
 

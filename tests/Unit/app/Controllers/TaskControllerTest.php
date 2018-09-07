@@ -2,12 +2,17 @@
 
 namespace Tests\Unit\app\Controllers;
 
-use App\Controllers\TaskController;
 use Doctrine\ORM\EntityManager;
+use Tests\Mocks\app\Controllers\TaskControllerMock;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class TaskControllerTest
+ *
+ * @package Tests\Unit\app\Controllers
+ */
 class TaskControllerTest extends TestCase
 {
     public function testConstruct()
@@ -38,11 +43,4 @@ class TaskControllerTest extends TestCase
         $this->assertInstanceOf(Response::class, $controller->response);
         $this->assertInstanceOf(EntityManager::class, $controller->em);
     }
-}
-
-class TaskControllerMock extends TaskController
-{
-    public $request;
-    public $response;
-    public $em;
 }

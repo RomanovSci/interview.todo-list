@@ -29,7 +29,7 @@ switch ($routeInfo[0]) {
         $response->setStatusCode(405);
         break;
     case \FastRoute\Dispatcher::FOUND:
-        $handlerInfo = explode('@',$routeInfo[1]);
+        $handlerInfo = explode('@', $routeInfo[1]);
 
         $className = $handlerInfo[0];
         $method = $handlerInfo[1];

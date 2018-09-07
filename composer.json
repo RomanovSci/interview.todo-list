@@ -27,7 +27,8 @@
     },
     "scripts": {
         "create-tables": "./vendor/bin/doctrine orm:schema-tool:create",
-        "serve": "cd ./public && php -S localhost:3000"
+        "serve": "cd ./public && php -S localhost:3000",
+        "test": "php ./vendor/bin/phpunit"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"

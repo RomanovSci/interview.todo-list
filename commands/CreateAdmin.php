@@ -18,13 +18,13 @@ if ($admin !== null) {
 echo 'Creating administrator entity'.PHP_EOL;
 
 echo 'Please input admin username: ';
-$username = fgets(fopen("php://stdin","r"));
+$username = fgets(fopen("php://stdin", "r"));
 
 echo 'Please create password: ';
-$password = fgets(fopen("php://stdin","r"));
+$password = fgets(fopen("php://stdin", "r"));
 
 echo 'Confirm password: ';
-$passwordConfirm = fgets(fopen("php://stdin","r"));
+$passwordConfirm = fgets(fopen("php://stdin", "r"));
 
 if ($password !== $passwordConfirm) {
     echo "Passwords doesn't match".PHP_EOL;
@@ -48,4 +48,3 @@ try {
 }
 
 echo 'Done';
-

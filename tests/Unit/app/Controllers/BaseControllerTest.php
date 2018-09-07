@@ -2,13 +2,17 @@
 
 namespace Tests\Unit\app\Controllers;
 
-use App\Controllers\BaseController;
+use Tests\Mocks\app\Controllers\BaseControllerMock;
 
+/**
+ * Class BaseControllerTest
+ *
+ * @package Tests\Unit\app\Controllers
+ */
 class BaseControllerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider unsuccessDataProvider
-     *
      * @param $message
      */
     public function testUnsuccess($message)
@@ -22,18 +26,15 @@ class BaseControllerTest extends \PHPUnit\Framework\TestCase
         ]), $actualResult);
     }
 
+    /**
+     * Data provider for testUnsuccess method
+     *
+     * @return array
+     */
     public function unsuccessDataProvider()
     {
         return [
             ['test1'], ['test2'], ['test3'], [false], [null],
         ];
-    }
-}
-
-class BaseControllerMock extends BaseController
-{
-    public function unsuccess($message = '')
-    {
-        return parent::unsuccess($message);
     }
 }
